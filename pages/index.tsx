@@ -6,12 +6,12 @@ import { useEffect, useRef, useState } from "react";
 export default function Home() {
   const [open, setOpen] = useState<boolean>();
   const { width } = useWindowSize();
-  const sidebarRef = useRef<HTMLDivElement>();
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (event: any) => {
     if (event.target.className === "nav-toggler") {
       setOpen(true);
-    } else if (!sidebarRef.current.contains(event.target)) {
+    } else if (!(sidebarRef.current as any).contains(event.target)) {
       setOpen(false);
     }
   };
