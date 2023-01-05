@@ -1,7 +1,17 @@
 import * as Icons from "@heroicons/react/24/solid";
+import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [open, setOpen] = useState<boolean>();
+  const { width } = useWindowSize();
+  console.log({ width });
+
+  if (width && open === undefined) {
+    setOpen(width >= 1024);
+  }
+
   return (
     <>
       <Head>
@@ -19,7 +29,7 @@ export default function Home() {
               <p>Customer Support</p>
             </div>
 
-            <button className="nav-toggler">
+            <button className="nav-toggler" onClick={() => setOpen(!open)}>
               <Icons.Bars3Icon className="h-6 w-6" />
             </button>
           </header>
@@ -40,23 +50,78 @@ export default function Home() {
             </div>
           </main>
         </div>
-        <div>
-          <Sidebar />
-        </div>
+
+        {width === undefined ? (
+          <div className="sidbar-lg">
+            <div className="sidebar-container">
+              <Sidebar onClose={() => setOpen(false)} />
+            </div>
+          </div>
+        ) : (
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.div
+                variants={{
+                  open: width >= 1024 ? { width: "auto" } : { x: "0%" },
+                  closed: width >= 1024 ? { width: 0 } : { x: "100%" },
+                }}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+                className="sidebar-container"
+              >
+                <Sidebar onClose={() => setOpen(false)} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
       </div>
     </>
   );
 }
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }: { onClose: () => void }) => {
   return (
-    <div className="sidebar-nav">
-      <div>
-        <p>Sidebar</p>
-        <button className="close">
-          <Icons.XMarkIcon className="h-6 w-6" />
-        </button>
-      </div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "10px",
+      }}
+    >
+      <p>Sidebar</p>
+      <button className="close" onClick={onClose}>
+        <Icons.XMarkIcon className="h-6 w-6" />
+      </button>
     </div>
   );
+};
+
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState<{
+    width: number | undefined;
+    height: number | undefined;
+  }>({
+    width: undefined,
+    height: undefined,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return windowSize;
 };
