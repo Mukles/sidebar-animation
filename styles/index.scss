@@ -25,6 +25,7 @@ body {
 }
 
 svg {
+  pointer-events: none;
   width: 24px;
   height: 24px;
 }
@@ -34,6 +35,14 @@ svg {
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
+}
+
+.sidebar-lg {
+  display: block;
+
+  @media (max-width: $lg) {
+    display: none;
+  }
 }
 
 button {
@@ -94,7 +103,7 @@ button {
 
   main {
     flex: 1;
-    padding-block: 60px;
+    padding-block: 40px;
     padding-inline: 16px;
 
     @media (max-width: $lg) {

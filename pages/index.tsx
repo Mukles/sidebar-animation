@@ -1,16 +1,31 @@
 import * as Icons from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const [open, setOpen] = useState<boolean>();
   const { width } = useWindowSize();
-  console.log({ width });
+  const sidebarRef = useRef<HTMLDivElement>();
+
+  const handleClick = (event: any) => {
+    if (event.target.className === "nav-toggler") {
+      setOpen(true);
+    } else if (!sidebarRef.current.contains(event.target)) {
+      setOpen(false);
+    }
+  };
 
   if (width && open === undefined) {
     setOpen(width >= 1024);
   }
+
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <>
@@ -50,32 +65,33 @@ export default function Home() {
             </div>
           </main>
         </div>
-
-        {width === undefined ? (
-          <div className="sidbar-lg">
-            <div className="sidebar-container">
-              <Sidebar onClose={() => setOpen(false)} />
-            </div>
-          </div>
-        ) : (
-          <AnimatePresence initial={false}>
-            {open && (
-              <motion.div
-                variants={{
-                  open: width >= 1024 ? { width: "auto" } : { x: "0%" },
-                  closed: width >= 1024 ? { width: 0 } : { x: "100%" },
-                }}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-                className="sidebar-container"
-              >
+        <div ref={sidebarRef}>
+          {width === undefined ? (
+            <div className="sidebar-lg">
+              <div className="sidebar-container">
                 <Sidebar onClose={() => setOpen(false)} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
+              </div>
+            </div>
+          ) : (
+            <AnimatePresence initial={false}>
+              {open && (
+                <motion.div
+                  variants={{
+                    open: width >= 1024 ? { width: "auto" } : { x: "0%" },
+                    closed: width >= 1024 ? { width: 0 } : { x: "100%" },
+                  }}
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+                  className="sidebar-container"
+                >
+                  <Sidebar onClose={() => setOpen(false)} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
+        </div>
       </div>
     </>
   );
