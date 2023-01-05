@@ -40,10 +40,23 @@ export default function Home() {
             </div>
           </main>
         </div>
-        <div className="sidebar">
-          <div className="sidebar-nav"></div>
+        <div>
+          <Sidebar />
         </div>
       </div>
     </>
   );
 }
+
+const Sidebar = () => {
+  return (
+    <div className="sidebar-nav">
+      <div>
+        <p>Sidebar</p>
+        <button className="close">
+          <Icons.XMarkIcon className="h-6 w-6" />
+        </button>
+      </div>
+    </div>
+  );
+};

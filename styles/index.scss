@@ -16,7 +16,6 @@ $dark-500: #0f172a;
 $dark-600: #94a3b8;
 
 //gray
-$gray-200: #7d8a9e;
 $gray-500: #64748b;
 $gray-700: #334155;
 
@@ -44,10 +43,16 @@ button {
   outline: none;
   cursor: pointer;
   color: $dark-600;
+  border-radius: 6px;
 
   &:hover {
     background: rgba($color: $white, $alpha: 0.1);
-    border-radius: 6px;
+  }
+
+  &.close {
+    position: fixed;
+    right: 12px;
+    top: 12px;
   }
 }
 
@@ -94,7 +99,7 @@ button {
 
   main {
     flex: 1;
-    padding-top: 64px;
+    padding-top: 60px;
     padding-inline: 16px;
 
     .container {
@@ -120,17 +125,30 @@ button {
     }
   }
 
-  .sidebar {
+  .sidebar-nav {
     position: sticky;
     top: 0px;
     right: 0px;
     bottom: 0px;
     height: 100vh;
 
+    @media (max-width: $lg) {
+      position: fixed;
+    }
+
     & > div {
       width: 384px;
       height: 100%;
       background: $dark-500;
+
+      @media (max-width: $lg) {
+        width: 280px;
+      }
+
+      p {
+        padding: 12px;
+        color: $gray-500;
+      }
     }
   }
 }
