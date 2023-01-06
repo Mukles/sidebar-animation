@@ -9,8 +9,10 @@ export default function Home() {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (event: any) => {
-    if (event.target.className === "nav-toggler") {
-    } else if (!(sidebarRef.current as any).contains(event.target)) {
+    if (
+      !(sidebarRef.current as any).contains(event.target) &&
+      event.target.className === "nav-toggler"
+    ) {
       setOpen(false);
     }
   };
