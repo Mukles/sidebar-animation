@@ -40,7 +40,7 @@ svg {
 .sidebar-lg {
   display: block;
 
-  @media (max-width: $lg) {
+  @media (max-width: $md) {
     display: none;
   }
 }
@@ -122,7 +122,7 @@ button {
         line-height: 48px;
         color: $white;
 
-        @media (max-width: $lg) {
+        @media (max-width: $md) {
           font-size: 30px;
         }
 
@@ -138,7 +138,7 @@ button {
         font-weight: 400;
         margin-top: 30px;
 
-        @media (max-width: $lg) {
+        @media (max-width: $md) {
           margin-top: 10px;
           line-height: 25px;
           font-size: 15px;
@@ -154,7 +154,7 @@ button {
     bottom: 0px;
     height: 100vh;
 
-    @media (max-width: $lg) {
+    @media (max-width: $md) {
       position: fixed;
     }
 
@@ -163,7 +163,7 @@ button {
       height: 100%;
       background: $dark-500;
 
-      @media (max-width: $lg) {
+      @media (max-width: $md) {
         width: 280px;
       }
 
