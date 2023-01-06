@@ -11,7 +11,7 @@ export default function Home() {
   const handleClick = (event: any) => {
     if (
       !(sidebarRef.current as any).contains(event.target) &&
-      event.target.className === "nav-toggler"
+      event.target.className !== "nav-toggler"
     ) {
       setOpen(false);
     }
