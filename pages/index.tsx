@@ -10,7 +10,6 @@ export default function Home() {
 
   const handleClick = (event: any) => {
     if (event.target.className === "nav-toggler") {
-      setOpen(true);
     } else if (!(sidebarRef.current as any).contains(event.target)) {
       setOpen(false);
     }
@@ -21,9 +20,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", (event) => handleClick(event));
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", (event) => handleClick(event));
     };
   }, []);
 
