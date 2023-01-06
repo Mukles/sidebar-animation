@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Sidebar with different animations on mobile (no doc reflows) and desktop (doc reflows), but the key part is the SSR defaults: closed on mobile but open on desktop. Then React becomes the source of truth.
+
+Technology use: Framer motion, nextJs.
 
 ## Getting Started
 
